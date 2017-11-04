@@ -1,21 +1,25 @@
+// models
 var db = require('../db');
-
-var counter = 1;
 
 module.exports = {
   messages: {
     get: function (cb) {
       var queryString = 'SELECT roomname, username, text FROM messages';
       db.query(queryString, function(err, results) {
-        cb(results);
+        cb({results: results});
       });
     }, 
     post: function (messageObj, cb) {
-      var queryString = `INSERT INTO messages VALUES (${counter++}, "${messageObj.roomname}", "${messageObj.username}", "${messageObj.text}")`;
+      console.log('MESSAGEOBJ ', messageObj);
+      //query select the largest message id
+      // increment to make new message id
+      var queryString = `INSERT INTO messages VALUES ("${messageObj.roomname}", "${messageObj.username}", "${messageObj.text}")`;
       db.query(queryString, function(err, results) {
+        console.log('ERR ', err);
+        console.log('RESULTS ', results);
         cb(results.insertId);
       });
-    } 
+    }
       
   },
 

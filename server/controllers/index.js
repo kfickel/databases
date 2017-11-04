@@ -1,10 +1,11 @@
+// controllers
 var models = require('../models');
 var utils = require('./utils.js');
 
 module.exports = {
   messages: {
     get: function (req, res) {
-      models.messages.get(function(data){
+      models.messages.get(function(data) {
         utils.sendResponse(res, data);
       });
     }, 

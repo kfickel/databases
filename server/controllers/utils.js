@@ -13,8 +13,15 @@ exports.sendResponse = function(response, data, statusCode) {
 };
 
 exports.collectData = function(request, callback) {
-  var data = request.body;
-  callback(data);
+  // var data = request.body;
+  var data = '';
+  request.on('data', function(chunk) {
+    data += chunk;
+  });
+  request.on('end', function() {
+    callback(JSON.parse(data));
+  });
+  // callback(data);
 };
 
 exports.makeActionHandler = function(actionMap) {
