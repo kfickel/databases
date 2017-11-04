@@ -8,20 +8,18 @@ module.exports = {
       var cb = function() {
         return models.messages.get();
       };
-      utils.sendResponse(res, cb);
+      utils.sendResponse(res, cb); // not able to send data bc async
     }, 
     post: function (req, res) {
-      console.log('post messages');
+      utils.collectData(req, models.messages.post);
     } // a function which handles posting a message to the database
   },
 
   users: {
     // Ditto as above
     get: function (req, res) {
-      console.log('get user');
     },
     post: function (req, res) {
-      console.log('post user');
     }
   }
 };
