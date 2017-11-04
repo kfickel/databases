@@ -8,27 +8,12 @@ var headers = {
 
 exports.sendResponse = function(response, data, statusCode) {
   statusCode = statusCode || 200;
-  // var data = callback();
-  // console.log('Send response data ', data); // not able to retrieve data bc async
-  // console.log('Send response data stringified ', JSON.stringify(data));
   response.writeHead(statusCode, headers);
   response.end(JSON.stringify(data));
 };
 
 exports.collectData = function(request, callback) {
-  console.log('inside collectData');
-  // console.log('REQUEST ', request);
-  // var data = '';
-  // request.on('data', function(chunk) {
-  //   data += chunk;
-  //   console.log('CHUNK BEFORE END ', chunk);
-  // });
-  // request.on('end', function() {
-  //   console.log('DATA ', data);
-  //   callback(JSON.parse(data));
-  // });
   var data = request.body;
-  console.log('DATA ', data);
   callback(data);
 };
 
