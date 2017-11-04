@@ -4,7 +4,7 @@ USE chat;
 
 CREATE TABLE rooms (
   id INTEGER PRIMARY KEY,
-  name TEXT
+  roomname TEXT
 );
 
 CREATE TABLE users (
@@ -17,7 +17,7 @@ CREATE TABLE messages (
   id INTEGER PRIMARY KEY,
   rooms_id INTEGER,
   users_id INTEGER,
-  message_text TEXT,
+  text TEXT,
   FOREIGN KEY(rooms_id) REFERENCES rooms(id),
   FOREIGN KEY(users_id) REFERENCES users(id)
 );
