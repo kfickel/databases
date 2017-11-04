@@ -4,14 +4,18 @@ var utils = require('./utils.js');
 module.exports = {
   messages: { // a function which handles a get request for all messages
     get: function (req, res) {
-      console.log('controller');
-      var cb = function() {
-        return models.messages.get();
-      };
-      utils.sendResponse(res, cb); // not able to send data bc async
+      // console.log('controller');
+      models.messages.get(function(data) {
+        utils.sendResponse(res, data); // not able to send data bc async
+      });
     }, 
     post: function (req, res) {
-      utils.collectData(req, models.messages.post);
+      console.log('inside controllers.messages.post');
+      utils.collectData(req, function(data) {
+        models.messages.post(data, function(insertId) {
+          utils.sendResponse(res, {objectId: insertId}, 201);
+        });
+      });
     } // a function which handles posting a message to the database
   },
 
@@ -20,6 +24,10 @@ module.exports = {
     get: function (req, res) {
     },
     post: function (req, res) {
+      console.log('inside controllers.users.post');
+      models.users.post(function(data) {
+        utils.sendResponse(res, data, 201);
+      });
     }
   }
 };

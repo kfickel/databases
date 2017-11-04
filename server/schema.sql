@@ -1,4 +1,4 @@
-CREATE DATABASE chat;
+-- CREATE DATABASE chat;
 
 USE chat;
 
@@ -7,7 +7,7 @@ CREATE TABLE messages (
   id INTEGER PRIMARY KEY,
   roomname TEXT,
   username TEXT,
-  text TEXT,
+  text TEXT
 );
 
 /* Create other tables and define schemas for them here! */

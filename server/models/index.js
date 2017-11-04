@@ -4,27 +4,30 @@ var counter = 1;
 
 module.exports = {
   messages: {
-    get: function () { // a function which produces all the messages
+    get: function (cb) { // a function which produces all the messages
       // should serve up array of messages, each containing username, text, roomname
-      console.log('model get before function');
+      // console.log('model get before function');
       // var queryString = 'SELECT rooms.roomname, users.username, messages.text FROM rooms, users, messages WHERE messages.rooms_id = rooms.id AND messages.users_id = users.id';
       var queryString = 'SELECT roomname, username, text FROM messages';
       db.connect();
       db.query(queryString, function(err, results) {
         // results is an array of ROWDATA objects, with properties 
         // corresponding to column names, must JSON stringify to serialize properly
-        console.log('RESULTS ', JSON.stringify(results));
-        return results; // async problem
+        // console.log('RESULTS ', JSON.stringify(results));
+        cb(results); // async problem
       });
-      // db.end();
+      db.end();
     }, 
-    post: function (messageObj) { // a function which can be used to insert a message into the database
+    post: function (messageObj, cb) { // a function which can be used to insert a message into the database
       // takes in a message object, and runs an insert query (or queries)
-      var queryString = `INSERT INTO messages VALUES (${counter++}, ${messageObj.roomname}, ${messageObj.username}, ${messageObj.text})`;
+      var queryString = `INSERT INTO messages VALUES (${counter++}, "${messageObj.roomname}", "${messageObj.username}", "${messageObj.text}")`;
+      db.connect();
       db.query(queryString, function(err, results) {
+        console.log('ERROR ', err);
         console.log('INSERT RESULTS ', results);
+        cb(results.insertId);
       });
-      // db.end();
+      db.end();
     } 
       
   },
@@ -37,11 +40,12 @@ module.exports = {
       db.query(queryString, function(err, results) {
         return results; // async problem
       });
-      // db.end();
+      db.end();
     },
-    post: function () {
+    post: function (cb) {
       // what's the point of this if we don't have a separate users table?
       // fake the test out until we get to advanced content.
+      cb('posted user');
       // db.end();
     }
   }
