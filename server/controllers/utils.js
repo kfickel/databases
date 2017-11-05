@@ -14,6 +14,7 @@ exports.sendResponse = function(response, data, statusCode) {
 
 exports.collectData = function(request, callback) {
   // var data = request.body;
+  console.log('inside collectData');
   var data = '';
   request.on('data', function(chunk) {
     data += chunk;

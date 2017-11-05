@@ -1,5 +1,6 @@
 
 var app = {
+  counter: 1,
 
   //TODO: The current 'handleUsernameClick' function just toggles the class 'friend'
   //to all messages sent by the user
@@ -213,6 +214,7 @@ var app = {
 
   handleSubmit: function(event) {
     var message = {
+      id: counter++,
       username: app.username,
       text: app.$message.val(),
       roomname: app.roomname || 'lobby'
